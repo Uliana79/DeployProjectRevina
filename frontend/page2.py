@@ -4,7 +4,7 @@ import pandas as pd
 from datetime import datetime
 import plotly.express as px
 
-API_BASE_URL = "http://localhost:8004"
+API_BASE_URL = "https://deploy-backend-revina.onrender.com"
 
 tab1, tab2 = st.tabs(["Добавить запись", "Удалить запись"])
 

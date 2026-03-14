@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 import pandas as pd
 
-API_BASE_URL = "http://localhost:8004"
+API_BASE_URL = "https://deploy-backend-revina.onrender.com"
 
 st.title("Таблица с данными электроэнергии")
 

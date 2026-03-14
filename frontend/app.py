@@ -1,7 +1,7 @@
 
 import streamlit as st
 
-API_BASE_URL = "http://localhost:8004" 
+API_BASE_URL = "https://deploy-backend-revina.onrender.com" 
 
 st.set_page_config(layout="wide")
 
