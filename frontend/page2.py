@@ -76,28 +76,28 @@ def load_all_records():
         st.error(f"Ошибка: {e}")
         return None
     
+with st.spinner(f'Идет визуализация ...'):
+    records = load_all_records()
 
-records = load_all_records()
-
-if records:
-    df = pd.DataFrame(records)
-    if not df.empty:
-        df['datetime'] = pd.to_datetime(df['timestep'])
-        df = df.sort_values('datetime')        
-        col1, col2 = st.columns(2)
-        with col1:
-            fig_cons = px.line(df, x='datetime', y=['consumption_eur', 'consumption_sib'],
-                              title=f"Потребление электроэнергии", 
-                              labels={'value': 'МВт·ч', 'datetime': 'Дата', 'variable': 'Регион'})
-            new_names = {'consumption_eur': 'Европейская часть', 'consumption_sib': 'Азиатская часть'}
-            st.plotly_chart(fig_cons, use_container_width=True)
-        
-        with col2:
-            fig_price = px.histogram(df, x=['price_eur', 'price_sib'], title=f"Распределение цен", nbins=30,
-                                    barmode='overlay',
-                                    opacity=0.7)
-            fig_price.update_layout(legend_title_text='Регион', xaxis_title="Цена", yaxis_title="Количество записей")
-            new_names = {'price_eur': 'Европейская часть', 'price_sib': 'Азиатская часть'}
-            st.plotly_chart(fig_price, use_container_width=True)
-else:
-    st.info("Нет данных для отображения графиков")
+    if records:
+        df = pd.DataFrame(records)
+        if not df.empty:
+            df['datetime'] = pd.to_datetime(df['timestep'])
+            df = df.sort_values('datetime')        
+            col1, col2 = st.columns(2)
+            with col1:
+                fig_cons = px.line(df, x='datetime', y=['consumption_eur', 'consumption_sib'],
+                                title=f"Потребление электроэнергии", 
+                                labels={'value': 'МВт·ч', 'datetime': 'Дата', 'variable': 'Регион'})
+                new_names = {'consumption_eur': 'Европейская часть', 'consumption_sib': 'Азиатская часть'}
+                st.plotly_chart(fig_cons, use_container_width=True)
+            
+            with col2:
+                fig_price = px.histogram(df, x=['price_eur', 'price_sib'], title=f"Распределение цен", nbins=30,
+                                        barmode='overlay',
+                                        opacity=0.7)
+                fig_price.update_layout(legend_title_text='Регион', xaxis_title="Цена", yaxis_title="Количество записей")
+                new_names = {'price_eur': 'Европейская часть', 'price_sib': 'Азиатская часть'}
+                st.plotly_chart(fig_price, use_container_width=True)
+    else:
+        st.info("Нет данных для отображения графиков")
